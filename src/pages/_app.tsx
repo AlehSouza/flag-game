@@ -1,5 +1,6 @@
 // pages/_app.js
 import { ChakraProvider } from '@chakra-ui/react'
+import { FlagGameProvider } from '../contexts/FlagGameContext';
 import './styles.css'
 
 // 1. Import the extendTheme function
@@ -22,7 +23,9 @@ type iProps = {
 function MyApp({ Component, pageProps }: iProps) {
     return (
         <ChakraProvider theme={theme}>
-            <Component {...pageProps} />
+            <FlagGameProvider>
+                <Component {...pageProps} />
+            </FlagGameProvider>
         </ChakraProvider>
     )
 }
