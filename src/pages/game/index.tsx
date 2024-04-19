@@ -7,9 +7,9 @@ import { api } from '@/services';
 import Image from 'next/image';
 
 const Index = () => {
-    const [countries, setCountries] = useState([])
-    const [selectedCountry, setSelectedCountry] = useState()
-    const [puzzleCountries, setPuzzleCountries] = useState([])
+    const [countries, setCountries] = useState<any>([])
+    const [selectedCountry, setSelectedCountry] = useState<any>()
+    const [puzzleCountries, setPuzzleCountries] = useState<any>([])
     const { gameConfig, setGameConfig } = useFlagGame();
     const router = useRouter()
 
