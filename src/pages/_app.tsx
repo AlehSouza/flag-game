@@ -2,6 +2,7 @@
 import { ChakraProvider } from '@chakra-ui/react'
 import { FlagGameProvider } from '../contexts/FlagGameContext';
 import './styles.css'
+import "@fontsource/poppins";
 
 // 1. Import the extendTheme function
 import { extendTheme } from '@chakra-ui/react'
@@ -9,8 +10,8 @@ import { extendTheme } from '@chakra-ui/react'
 // 2. Extend the theme to include custom colors, fonts, etc
 const theme = extendTheme({
     fonts: {
-        // heading: `'Open Sans', sans-serif`,
-        // body: `'oswald', sans-serif`,
+        heading: `'Poppins', sans-serif`,
+        body: `'Poppins', sans-serif`,
     },
 })
 

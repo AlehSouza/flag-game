@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useFlagGame } from '../../contexts/FlagGameContext';
 import { useRouter } from 'next/router';
-import { Box, Button, Flex, Text, layout } from '@chakra-ui/react';
+import { Box, Button, Flex, Text, layout, useDisclosure } from '@chakra-ui/react';
 import Head from "next/head";
 import { api } from '@/services';
+import shuffle from '@/helpers/shuffle';
 import Image from 'next/image';
+import { FlagA, FlagB, Modal } from '@/components';
 
 const Index = () => {
 
@@ -17,24 +19,17 @@ const Index = () => {
     const { gameConfig, setGameConfig } = useFlagGame();
     const router = useRouter()
 
+    const {
+        isOpen,
+        onOpen,
+    } = useDisclosure()
+
+
+
     useEffect(() => {
         gameConfig.difficulty === '' ? router.push('/') : null
         getCountries()
     }, [])
-
-    const shuffle = (array: any) => {
-        let currentIndex = array.length,
-            randomIndex;
-        while (currentIndex != 0) {
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex--;
-            [array[currentIndex], array[randomIndex]] = [
-                array[randomIndex],
-                array[currentIndex],
-            ];
-        }
-        return array;
-    }
 
     const sortTheme = () => {
         const sort = Math.floor(Math.random() * 10) + 1;
@@ -44,9 +39,8 @@ const Index = () => {
         return false
     }
 
-    // pega os paises
     const getCountries = async () => {
-        // Tipar no final
+        // Tipar no finals
         try {
             const { data } = await api.get<{}[]>('/all')
             setCountries(shuffle(data))
@@ -55,7 +49,6 @@ const Index = () => {
         }
     }
 
-    // seleciona 4 paises aleatorios e 1 selecionado
     const selectNewCountry = async () => {
         setCountries(shuffle(countries))
         try {
@@ -78,20 +71,56 @@ const Index = () => {
             return
         }
 
-        const index = puzzleCountries.map((country: any, index: any) => {
-            if (country.name.common === selectedCountry.name.common) {
-                return (index + 1)
-            }
-            return
-        })
-
-        alert(`Fim de jogo, sua pontuação ${points}, a resposta correta era ${selectedCountry.name.common}, ou a opção ${index}`)
-        router.push('/')
+        onOpen()
+        // alert(`Fim de jogo, sua pontuação ${points}, a resposta correta era ${selectedCountry.name.common}, ou a opção ${index}`)
+        // router.push('/')
     }
 
     useEffect(() => {
         selectNewCountry()
     }, [countries])
+
+    const ModalLose = () => {
+        const correctPosFlagIndex = puzzleCountries.findIndex((country: any) => {
+            return country?.name?.common === selectedCountry?.name?.common;
+        });
+
+        return (
+            <Modal isOpen={isOpen} size='xl'>
+                <Flex
+                    alignItems={'center'}
+                    flexDir={'column'}
+                >
+                    <Text fontSize={'32px'} fontWeight={'bold'} pb={8}>
+                        Fim de jogo!
+                    </Text>
+                    <Text pb={8}>
+                        {
+                            layoutAB
+                                ? <span>A resposta correta era a <Text as="b" color={'yellowgreen'}>{selectedCountry?.name?.common}</Text></span>
+                                : <span>A bandeira correta para <Text as="b" color={'yellowgreen'}>{selectedCountry?.name?.common}</Text>, era a opção de nº <span style={{ color: 'yellowgreen' }}>{correctPosFlagIndex + 1}</span></span>
+                        }
+
+                    </Text>
+                    {
+                        !layoutAB &&
+                        <Box
+                            width={'200px'}
+                            height={'100px'}
+                            backgroundImage={`${selectedCountry?.flags?.svg}`}
+                            backgroundSize={'100% 100%'}
+                            backgroundPosition={'center'}
+                            mb={8}
+                        />
+                    }
+                    <Text pb={8}>
+                        Sua pontuação foi de <span style={{ color: 'yellowgreen' }}>{points}</span> pontos!
+                    </Text>
+                    <Button width={'100%'} mb={'16px'} onClick={() => { router.push('/') }}>Voltar ao menu </Button>
+                </Flex>
+            </Modal>
+        )
+    }
 
     return (
         <Flex
@@ -106,20 +135,18 @@ const Index = () => {
             padding={'20px'}
             paddingTop={'100px'}
             paddingBottom={'50px'}
-            bgColor={"#363239"}
             flexDir={"column"}
-            justifyContent={"center"}
+            background={'radial-gradient(ellipse at top, #662222, transparent),radial-gradient(ellipse at bottom, #150303, transparent);'}
             alignItems={"center"}
         >
+            <ModalLose />
             <Head>
                 <title>Flag Game</title>
             </Head>
             <Flex
-                backgroundColor={'white'}
                 borderRadius={'lg'}
                 color={'black'}
                 padding={'14px'}
-                position={'fixed'}
                 top={'20px'}
                 width={'100%'}
                 maxWidth={'200px'}
@@ -132,152 +159,15 @@ const Index = () => {
                     justifyContent={'center'}
                     alignItems={'center'}
                     display={'flex'}
+                    color={'white'}
                 >
                     Acertos <span style={{ color: 'green', paddingLeft: '10px' }}>{points}</span>
                 </Text>
             </Flex>
             {
-                layoutAB ?
-                    <Flex
-                        justifyContent={'center'}
-                        alignItems={'center'}
-                        flexDir={'column'}
-                    >
-                        <Text
-                            pb={{
-                                base: 4,
-                                lg: 16
-                            }}
-                            fontSize={{
-                                base: '2.25rem',
-                            }}
-                            textAlign={'center'}
-                            width={'auto'}
-                        >
-                            Que país é esse?
-                        </Text>
-                        <Flex
-                            width={{
-                                base: '100%',
-                                lg: '550px',
-                                md: '100%',
-                                sm: '100%',
-                            }}
-                            minH={{
-                                base: '200px',
-                                lg: '330px',
-                                md: '330px',
-                            }}
-                            justifyContent={'center'}
-                            alignItems={'center'}
-                            backgroundImage={`${selectedCountry?.flags?.svg}`}
-                            backgroundSize={'100% 100%'}
-                            backgroundPosition={'center'}
-                            mb={16}
-                        />
-                        <Flex
-                            width={{
-                                base: 'auto',
-                                lg: '800px',
-                                md: '800px',
-                            }}
-                            flexDirection={'row'}
-                            flexWrap={'wrap'}
-                            justifyContent={'center'}
-                            alignItems={'center'}
-                            gap={'20px'}
-                        >
-                            {
-                                puzzleCountries.length > 0 &&
-                                puzzleCountries.map((puzzleCountry: any, index: any) => {
-                                    return (
-                                        <Box key={index} width={{
-                                            base: '100%',
-                                            lg: '46%',
-                                            md: '100%',
-                                            sm: '100%',
-                                        }}>
-                                            <Button p={'40px'} w={'100%'} onClick={() => { guessFlag(puzzleCountry.name.common) }}>
-                                                {puzzleCountry?.name?.common}
-                                            </Button>
-                                        </Box>
-                                    )
-                                })
-                            }
-                        </Flex>
-                    </Flex>
-                    : <Flex
-                        justifyContent={'center'}
-                        alignItems={'center'}
-                        flexDir={'column'}
-                    >
-                        <Text
-                            pb={{
-                                base: 16,
-                                lg: 16
-                            }}
-                            fontSize={{
-                                base: '2.25rem',
-                            }}
-                            textAlign={'center'}
-                            width={'auto'}
-                        >
-                            Qual é a bandeira do país...?
-                        </Text>
-                        <Flex
-                            justifyContent={'center'}
-                            alignItems={'center'}
-                            backgroundSize={'100% 100%'}
-                            backgroundPosition={'center'}
-                            borderRadius={'lg'}
-                            mb={20}
-                        >
-                            <Text
-                                fontSize={'3.25rem'}
-                                fontWeight={'bold'}
-                                color={'greenyellow'}
-                                textAlign={'center'}
-                            >
-                                {selectedCountry?.name?.common}
-                            </Text>
-                        </Flex>
-                        <Flex
-                            width={{
-                                base: 'auto',
-                                lg: '1000px',
-                                md: '600px',
-                            }}
-                            flexDirection={{
-                                base: 'column',
-                                lg: 'row',
-                                md: 'row',
-                            }}
-                            flexWrap={'wrap'}
-                            justifyContent={'center'}
-                            alignItems={'center'}
-                            gap={'20px'}
-                        >
-                            {
-                                puzzleCountries.length > 0 &&
-                                puzzleCountries.map((puzzleCountry: any, index: any) => {
-                                    return (
-                                        <button key={index} onClick={() => { guessFlag(puzzleCountry.name.common) }}>
-                                            <Flex
-                                                minW={'200px'}
-                                                minH={'100px'}
-                                                justifyContent={'center'}
-                                                alignItems={'center'}
-                                                backgroundImage={`${puzzleCountry?.flags?.svg}`}
-                                                backgroundPosition={'center'}
-                                                backgroundSize={'cover'}
-                                                borderRadius={'lg'}
-                                            />
-                                        </button>
-                                    )
-                                })
-                            }
-                        </Flex>
-                    </Flex>
+                layoutAB
+                    ? <FlagA selectedCountry={selectedCountry} puzzleCountries={puzzleCountries} guessFlag={guessFlag} />
+                    : <FlagB selectedCountry={selectedCountry} puzzleCountries={puzzleCountries} guessFlag={guessFlag} />
             }
 
         </Flex>
