@@ -9,33 +9,42 @@ import {
 import { ReactNode } from 'react'
 
 type IModal = {
+    // onClose: () => void,
     isOpen: boolean
     children: ReactNode
     title?: string
     size?: string
 }
 
-function Index({ isOpen, title, children, size = 'md' }: IModal) {
+function Index({
+    // onClose, 
+    isOpen,
+    title,
+    children,
+    size = 'md'
+}: IModal) {
 
     return (
         <>
             <Modal
-                onClose={() => { }}
+                // onClose={onClose}
+                onClose={() => {}}
                 isOpen={isOpen}
                 size={size}
                 isCentered
             >
                 <ModalOverlay />
-                <ModalContent background={'#323232'}>
+                <ModalContent background={'#323232'} margin={5}>
                     {/* <ModalHeader style={{ letterSpacing: '1px' }}>{title && title}</ModalHeader> */}
+                    {/* <ModalCloseButton /> */}
                     <ModalBody
                         paddingTop={'24px'}
                         background={'radial-gradient(ellipse at top, #662222, transparent),radial-gradient(ellipse at bottom, #150303, transparent);'}
                     >
-                        {children}
-                    </ModalBody>
-                </ModalContent>
-            </Modal>
+                    {children}
+                </ModalBody>
+            </ModalContent>
+        </Modal >
         </>
     )
 }

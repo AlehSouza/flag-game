@@ -64,16 +64,24 @@ const Index = () => {
         }
     }
 
+    const updateBestScore = (newScore: any) => {
+        if (typeof window !== 'undefined') {
+            const bestScore = localStorage.getItem('best-score-point');
+            if (!bestScore || newScore > parseInt(bestScore)) {
+                localStorage.setItem('best-score-point', newScore);
+            }
+        }
+    }
+
+
     const guessFlag = (name: string) => {
         if (name === selectedCountry?.name?.common) {
             selectNewCountry()
             setPoints((points + 1))
             return
         }
-
+        updateBestScore(points)
         onOpen()
-        // alert(`Fim de jogo, sua pontuação ${points}, a resposta correta era ${selectedCountry.name.common}, ou a opção ${index}`)
-        // router.push('/')
     }
 
     useEffect(() => {
@@ -94,7 +102,7 @@ const Index = () => {
                     <Text fontSize={'32px'} fontWeight={'bold'} pb={8}>
                         Fim de jogo!
                     </Text>
-                    <Text pb={8}>
+                    <Text pb={8} textAlign={'center'}>
                         {
                             layoutAB
                                 ? <span>A resposta correta era a <Text as="b" color={'yellowgreen'}>{selectedCountry?.name?.common}</Text></span>

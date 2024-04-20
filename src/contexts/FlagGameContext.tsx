@@ -23,10 +23,6 @@ export function FlagGameProvider({ children }: { children: ReactNode }) {
     timeLimit: 60 // seconds
   });
 
-  useEffect(() => {
-    console.log('Game Config Changes', gameConfig)
-  },[gameConfig])
-
   return (
     <FlagGameContext.Provider value={{ gameConfig, setGameConfig }}>
       {children}
