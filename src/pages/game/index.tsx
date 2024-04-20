@@ -85,7 +85,7 @@ const Index = () => {
             return
         })
 
-        alert(`Fim de jogo, sua pontuação ${points}, a resposta correta era ${selectedCountry.name.common}, ou a opção ${index}`)
+        alert(`Fim de jogo, sua pontuação ${points}, a resposta correta era ${selectedCountry.name.common}, ou a opção ${(index+1)}`)
         router.push('/')
     }
 
