@@ -42,12 +42,6 @@ const Index = () => {
         return false
     }
 
-    useEffect(() => {
-        if (layoutAB) {
-            console.log('sou verdadeiro mudei de layout =)')
-        }
-    }, [layoutAB])
-
     // pega os paises
     const getCountries = async () => {
         // Tipar no final
@@ -81,8 +75,8 @@ const Index = () => {
             setPoints((points + 1))
             return
         }
-        alert(`Infelizmente você foi de caixa viu, forte abraço, sua pontuação foi de ${points}`)
-        router.push('/')
+        // alert(`Infelizmente você foi de caixa viu, forte abraço, sua pontuação foi de ${points}`)
+        // router.push('/')
     }
 
     useEffect(() => {
@@ -92,7 +86,16 @@ const Index = () => {
     return (
         <Flex
             w={"100%"}
-            h={"100vh"}
+            h={{
+                base: 'auto',
+                lg: '100vh',
+                md: 'autp',
+                sm: 'auto'
+            }}
+            minH={{ base: '100vh' }}
+            padding={'20px'}
+            paddingTop={'100px'}
+            paddingBottom={'50px'}
             bgColor={"#363239"}
             flexDir={"column"}
             justifyContent={"center"}
@@ -105,7 +108,7 @@ const Index = () => {
                 backgroundColor={'white'}
                 borderRadius={'lg'}
                 color={'black'}
-                padding={'20px'}
+                padding={'14px'}
                 position={'fixed'}
                 top={'20px'}
                 width={'100%'}
@@ -120,7 +123,7 @@ const Index = () => {
                     alignItems={'center'}
                     display={'flex'}
                 >
-                    Pontuação: <span style={{ color: 'red', paddingLeft: '10px' }}>{points}</span>
+                    Acertos <span style={{ color: 'green', paddingLeft: '10px' }}>{points}</span>
                 </Text>
             </Flex>
             {
@@ -131,15 +134,30 @@ const Index = () => {
                         flexDir={'column'}
                     >
                         <Text
-                            pb={16}
-                            fontSize={'3.25rem'}
+                            pb={{
+                                base: 4,
+                                lg: 16
+                            }}
+                            fontSize={{
+                                base: '2.25rem',
+                            }}
+                            textAlign={'center'}
+                            width={'auto'}
                         >
                             Que país é esse?
                         </Text>
-                        {/* FLAG */}
                         <Flex
-                            minW={'550px'}
-                            minH={'300px'}
+                            width={{
+                                base: '100%',
+                                lg: '550px',
+                                md: '100%',
+                                sm: '100%',
+                            }}
+                            minH={{
+                                base: '200px',
+                                lg: '330px',
+                                md: '330px',
+                            }}
                             justifyContent={'center'}
                             alignItems={'center'}
                             backgroundImage={`${selectedCountry?.flags?.svg}`}
@@ -147,9 +165,12 @@ const Index = () => {
                             backgroundPosition={'center'}
                             mb={16}
                         />
-                        {/* FLAG */}
                         <Flex
-                            width={'800px'}
+                            width={{
+                                base: 'auto',
+                                lg: '800px',
+                                md: '800px',
+                            }}
                             flexDirection={'row'}
                             flexWrap={'wrap'}
                             justifyContent={'center'}
@@ -160,7 +181,12 @@ const Index = () => {
                                 puzzleCountries.length > 0 &&
                                 puzzleCountries.map((puzzleCountry: any, index: any) => {
                                     return (
-                                        <Box key={index} width={'46%'}>
+                                        <Box key={index} width={{
+                                            base: '100%',
+                                            lg: '46%',
+                                            md: '100%',
+                                            sm: '100%',
+                                        }}>
                                             <Button p={'40px'} w={'100%'} onClick={() => { guessFlag(puzzleCountry.name.common) }}>
                                                 {puzzleCountry?.name?.common}
                                             </Button>
@@ -176,12 +202,18 @@ const Index = () => {
                         flexDir={'column'}
                     >
                         <Text
-                            pb={20}
-                            fontSize={'3.25rem'}
+                            pb={{
+                                base: 16,
+                                lg: 16
+                            }}
+                            fontSize={{
+                                base: '2.25rem',
+                            }}
+                            textAlign={'center'}
+                            width={'auto'}
                         >
                             Qual é a bandeira do país...?
                         </Text>
-                        {/* FLAG */}
                         <Flex
                             justifyContent={'center'}
                             alignItems={'center'}
@@ -194,14 +226,22 @@ const Index = () => {
                                 fontSize={'3.25rem'}
                                 fontWeight={'bold'}
                                 color={'greenyellow'}
+                                textAlign={'center'}
                             >
                                 {selectedCountry?.name?.common}
                             </Text>
                         </Flex>
-                        {/* FLAG */}
                         <Flex
-                            width={'1000px'}
-                            flexDirection={'row'}
+                            width={{
+                                base: 'auto',
+                                lg: '1000px',
+                                md: '600px',
+                            }}
+                            flexDirection={{
+                                base: 'column',
+                                lg: 'row',
+                                md: 'row',
+                            }}
                             flexWrap={'wrap'}
                             justifyContent={'center'}
                             alignItems={'center'}
@@ -211,11 +251,6 @@ const Index = () => {
                                 puzzleCountries.length > 0 &&
                                 puzzleCountries.map((puzzleCountry: any, index: any) => {
                                     return (
-                                        // <Box key={index} width={'46%'}>
-                                        //     <Button p={'40px'} w={'100%'} onClick={() => { guessFlag(puzzleCountry.name.common) }}>
-                                        //         {puzzleCountry?.name?.common}
-                                        //     </Button>
-                                        // </Box>
                                         <button key={index} onClick={() => { guessFlag(puzzleCountry.name.common) }}>
                                             <Flex
                                                 minW={'200px'}
@@ -234,6 +269,7 @@ const Index = () => {
                         </Flex>
                     </Flex>
             }
+
         </Flex>
     );
 }
