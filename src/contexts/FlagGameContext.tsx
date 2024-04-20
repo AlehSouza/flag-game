@@ -4,6 +4,7 @@ import React, { createContext, useState, useContext, ReactNode, useEffect } from
 interface GameConfig {
   difficulty: string;
   maxAttempts: number;
+  lifes: number;
   timeLimit: number; // seconds
 }
 
@@ -18,6 +19,7 @@ export function FlagGameProvider({ children }: { children: ReactNode }) {
   const [gameConfig, setGameConfig] = useState<GameConfig>({
     difficulty: '',
     maxAttempts: 3,
+    lifes: 3,
     timeLimit: 60 // seconds
   });
 
