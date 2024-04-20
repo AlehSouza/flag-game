@@ -80,12 +80,12 @@ const Index = () => {
 
         const index = puzzleCountries.map((country: any, index: any) => {
             if (country.name.common === selectedCountry.name.common) {
-                return index
+                return (index + 1)
             }
             return
         })
 
-        alert(`Fim de jogo, sua pontuação ${points}, a resposta correta era ${selectedCountry.name.common}, ou a opção ${(index+1)}`)
+        alert(`Fim de jogo, sua pontuação ${points}, a resposta correta era ${selectedCountry.name.common}, ou a opção ${index}`)
         router.push('/')
     }
 
