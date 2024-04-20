@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 const Index = () => {
     const { gameConfig, setGameConfig } = useFlagGame();
     const [isPlay, setIsPlay] = useState(false)
-    const [bestScore, setBestScore] = useState(undefined)
+    const [bestScore, setBestScore] = useState<any>()
     const router = useRouter()
 
     const {
