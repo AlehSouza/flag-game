@@ -3,8 +3,6 @@ import flags from "@/helpers/flags"
 
 const Index = () => {
 
-    const MyMarquee = HTMLMarqueeElement;
-
     return (
         <>
             <Box width={'100%'} position={'absolute'} top={'0'}>
