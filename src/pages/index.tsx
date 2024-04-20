@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { useFlagGame } from "@/contexts/FlagGameContext";
-import { Box, Button, Flex, Stack } from "@chakra-ui/react";
+import { Box, Button, Flex, Stack, Text } from "@chakra-ui/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
@@ -23,7 +23,7 @@ const Index = () => {
         <Flex
             w={"100%"}
             h={"100vh"}
-            bgColor={"#904fff"}
+            bgColor={"#363239"}
             flexDir={"column"}
             justifyContent={"center"}
             alignItems={"center"}
@@ -31,19 +31,25 @@ const Index = () => {
             <Head>
                 <title>Flag Game</title>
             </Head>
-            <Box mb={4}>
-                <Image src={"https://i.pinimg.com/564x/ce/66/9d/ce669d55c1a115f496af851180cd78f1.jpg"} width={50} height={50} alt="logo" />
+            <Box mb={8}>
+                <Text
+                    textAlign={'center'}
+                    fontSize={'54px'}
+                >
+                    Flags
+                </Text>
+                <Image src={"https://i.makeagif.com/media/5-13-2016/u0hGWG.gif"} width={200} height={200} alt="logo" />
             </Box>
             {
                 !isPlay
                     ? <Stack direction="column" spacing={4} width={"90%"} maxW={"600px"}>
-                        <Button colorScheme="purple" variant="solid" onClick={() => setIsPlay(!isPlay)}>
+                        <Button variant="solid" onClick={() => setIsPlay(!isPlay)}>
                             <label style={{ width: "100%", cursor: "pointer" }}>Jogar</label>
                         </Button>
-                        <Button colorScheme="purple" variant="solid">
+                        <Button variant="solid">
                             <label style={{ width: "100%", cursor: "pointer" }}>Sobre</label>
                         </Button>
-                        <Button colorScheme="purple" variant="solid">
+                        <Button variant="solid">
                             <label style={{ width: "100%", cursor: "pointer" }}>LeaderBoard</label>
                         </Button>
                         <Button bgColor={'#000000'} _hover={{ backgroundColor: '#1a1a1a' }} variant="solid">

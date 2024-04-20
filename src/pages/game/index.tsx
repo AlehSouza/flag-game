@@ -7,6 +7,8 @@ import { api } from '@/services';
 import Image from 'next/image';
 
 const Index = () => {
+
+    // #TODO arrumar todos os ANY'S
     const [countries, setCountries] = useState<any>([])
     const [selectedCountry, setSelectedCountry] = useState<any>()
     const [puzzleCountries, setPuzzleCountries] = useState<any>([])
@@ -75,7 +77,15 @@ const Index = () => {
             setPoints((points + 1))
             return
         }
-        alert(`Fim de jogo, sua pontuação ${points}`)
+
+        const index = puzzleCountries.map((country: any, index: any) => {
+            if (country.name.common === selectedCountry.name.common) {
+                return index
+            }
+            return
+        })
+
+        alert(`Fim de jogo, sua pontuação ${points}, a resposta correta era ${selectedCountry.name.common}, ou a opção ${index}`)
         router.push('/')
     }
 
