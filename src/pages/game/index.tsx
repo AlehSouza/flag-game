@@ -75,8 +75,8 @@ const Index = () => {
             setPoints((points + 1))
             return
         }
-        // alert(`Infelizmente você foi de caixa viu, forte abraço, sua pontuação foi de ${points}`)
-        // router.push('/')
+        alert(`Fim de jogo, sua pontuação ${points}`)
+        router.push('/')
     }
 
     useEffect(() => {
