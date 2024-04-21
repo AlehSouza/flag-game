@@ -47,7 +47,7 @@ const Index = () => {
 
     const ModalRank = () => {
         return (
-            <Modal isOpen={isOpen} size='xl'>
+            <Modal onClose={() => { onClose() }} isOpen={isOpen} size='xl'>
                 <Text textAlign={'center'}>
                     <Text
                         textAlign={'center'}
@@ -67,7 +67,7 @@ const Index = () => {
 
     const ModalFaq = () => {
         return (
-            <Modal isOpen={isOpenFaq} size='xl'>
+            <Modal onClose={() => { onCloseFaq() }} isOpen={isOpenFaq} size='xl'>
                 <Text textAlign={'center'}>
                     <Text
                         textAlign={'center'}
