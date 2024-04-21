@@ -19,7 +19,7 @@ const Index = ({ selectedCountry, puzzleCountries, guessFlag }: IProps) => {
                     lg: 16
                 }}
                 fontSize={{
-                    base: '2.25rem',
+                    base: '26px',
                 }}
                 textAlign={'center'}
                 width={'auto'}
@@ -71,7 +71,7 @@ const Index = ({ selectedCountry, puzzleCountries, guessFlag }: IProps) => {
                                 sm: '100%',
                             }}>
                                 <Button p={'40px'} w={'100%'} onClick={() => { guessFlag(puzzleCountry.name.common) }}>
-                                    {puzzleCountry?.name?.common}
+                                    {puzzleCountry?.translations?.por?.common}
                                 </Button>
                             </Box>
                         )

@@ -9,7 +9,7 @@ import {
 import { ReactNode } from 'react'
 
 type IModal = {
-    // onClose: () => void,
+    onClose: () => void,
     isOpen: boolean
     children: ReactNode
     title?: string
@@ -17,7 +17,7 @@ type IModal = {
 }
 
 function Index({
-    // onClose, 
+    onClose, 
     isOpen,
     title,
     children,
@@ -27,8 +27,7 @@ function Index({
     return (
         <>
             <Modal
-                // onClose={onClose}
-                onClose={() => {}}
+                onClose={onClose}
                 isOpen={isOpen}
                 size={size}
                 isCentered

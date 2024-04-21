@@ -6,7 +6,7 @@ type IProps = {
     guessFlag: (name: string) => void,
 }
 
-const Index = ({ selectedCountry, puzzleCountries, guessFlag }: IProps) =>{
+const Index = ({ selectedCountry, puzzleCountries, guessFlag }: IProps) => {
     return (
         <Flex
             justifyContent={'center'}
@@ -19,7 +19,7 @@ const Index = ({ selectedCountry, puzzleCountries, guessFlag }: IProps) =>{
                     lg: 16
                 }}
                 fontSize={{
-                    base: '2.25rem',
+                    base: '26px',
                 }}
                 textAlign={'center'}
                 letterSpacing={'1.5px'}
@@ -34,21 +34,23 @@ const Index = ({ selectedCountry, puzzleCountries, guessFlag }: IProps) =>{
                 backgroundSize={'100% 100%'}
                 backgroundPosition={'center'}
                 borderRadius={'lg'}
-                mb={20}
+                mb={10}
             >
                 <Text
-                    fontSize={'3.25rem'}
+                    fontSize={{
+                        base: '26px',
+                    }}
                     fontWeight={'bold'}
                     color={'greenyellow'}
                     textAlign={'center'}
                 >
-                    {selectedCountry?.name?.common}
+                    {selectedCountry?.translations?.por?.common}
                 </Text>
             </Flex>
             <Flex
                 width={{
                     base: 'auto',
-                    lg: '1000px',
+                    lg: '1200px',
                     md: '600px',
                 }}
                 flexDirection={{
@@ -67,8 +69,8 @@ const Index = ({ selectedCountry, puzzleCountries, guessFlag }: IProps) =>{
                         return (
                             <button key={index} onClick={() => { guessFlag(puzzleCountry.name.common) }}>
                                 <Flex
-                                    minW={'200px'}
-                                    minH={'100px'}
+                                    minW={'280px'}
+                                    minH={'150px'}
                                     justifyContent={'center'}
                                     alignItems={'center'}
                                     backgroundImage={`${puzzleCountry?.flags?.svg}`}

@@ -22,9 +22,8 @@ const Index = () => {
     const {
         isOpen,
         onOpen,
+        onClose
     } = useDisclosure()
-
-
 
     useEffect(() => {
         gameConfig.difficulty === '' ? router.push('/') : null
@@ -73,7 +72,6 @@ const Index = () => {
         }
     }
 
-
     const guessFlag = (name: string) => {
         if (name === selectedCountry?.name?.common) {
             selectNewCountry()
@@ -82,6 +80,12 @@ const Index = () => {
         }
         updateBestScore(points)
         onOpen()
+    }
+
+    const tryAgain = () => {
+        onClose()
+        selectNewCountry()
+        setPoints(0)
     }
 
     useEffect(() => {
@@ -94,7 +98,7 @@ const Index = () => {
         });
 
         return (
-            <Modal isOpen={isOpen} size='xl'>
+            <Modal onClose={onClose} isOpen={isOpen} size='xl'>
                 <Flex
                     alignItems={'center'}
                     flexDir={'column'}
@@ -105,16 +109,16 @@ const Index = () => {
                     <Text pb={8} textAlign={'center'}>
                         {
                             layoutAB
-                                ? <span>A resposta correta era a <Text as="b" color={'yellowgreen'}>{selectedCountry?.name?.common}</Text></span>
-                                : <span>A bandeira correta para <Text as="b" color={'yellowgreen'}>{selectedCountry?.name?.common}</Text>, era a opção de nº <span style={{ color: 'yellowgreen' }}>{correctPosFlagIndex + 1}</span></span>
+                                ? <span>A resposta correta era a <Text as="b" color={'yellowgreen'}>{selectedCountry?.translations?.por?.common}</Text></span>
+                                : <span>A bandeira correta para <Text as="b" color={'yellowgreen'}>{selectedCountry?.translations?.por?.common}</Text>, era a opção de nº <span style={{ color: 'yellowgreen' }}>{correctPosFlagIndex + 1}</span></span>
                         }
 
                     </Text>
                     {
                         !layoutAB &&
                         <Box
-                            width={'200px'}
-                            height={'100px'}
+                            width={'240px'}
+                            height={'130px'}
                             backgroundImage={`${selectedCountry?.flags?.svg}`}
                             backgroundSize={'100% 100%'}
                             backgroundPosition={'center'}
@@ -124,6 +128,7 @@ const Index = () => {
                     <Text pb={8}>
                         Sua pontuação foi de <span style={{ color: 'yellowgreen' }}>{points}</span> pontos!
                     </Text>
+                    <Button width={'100%'} mb={'16px'} onClick={() => { tryAgain() }}>Tentar novamente </Button>
                     <Button width={'100%'} mb={'16px'} onClick={() => { router.push('/') }}>Voltar ao menu </Button>
                 </Flex>
             </Modal>
@@ -136,15 +141,15 @@ const Index = () => {
             h={{
                 base: 'auto',
                 lg: '100vh',
-                md: 'autp',
+                md: 'auto',
                 sm: 'auto'
             }}
             minH={{ base: '100vh' }}
-            padding={'20px'}
-            paddingTop={'100px'}
+            padding={'25px'}
             paddingBottom={'50px'}
             flexDir={"column"}
             background={'radial-gradient(ellipse at top, #662222, transparent),radial-gradient(ellipse at bottom, #150303, transparent);'}
+            justifyContent={'center'}
             alignItems={"center"}
         >
             <ModalLose />
