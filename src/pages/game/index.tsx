@@ -12,6 +12,7 @@ import { FaHeart, FaHeartBroken } from "react-icons/fa";
 const Index = () => {
 
     // #TODO arrumar todos os ANY'S
+    const { gameConfig, setGameConfig } = useFlagGame();
     const [countries, setCountries] = useState<any>([])
     const [selectedCountry, setSelectedCountry] = useState<any>()
     const [puzzleCountries, setPuzzleCountries] = useState<any>([])
@@ -19,7 +20,6 @@ const Index = () => {
     const [lifes, setLifes] = useState([true, true, true])
     const [layoutAB, setLayoutAB] = useState(false)
     const [points, setPoints] = useState(0)
-    const { gameConfig, setGameConfig } = useFlagGame();
     const router = useRouter()
 
     const {
