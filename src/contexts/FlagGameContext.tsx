@@ -1,11 +1,8 @@
-// FlagGameContext.tsx
-import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
+import React, { createContext, useState, useContext, ReactNode } from 'react';
 
 interface GameConfig {
   difficulty: string;
-  maxAttempts: number;
-  lifes: number;
-  timeLimit: number; // seconds
+  timeLimit: number;
 }
 
 interface FlagGameContextType {
@@ -18,9 +15,7 @@ const FlagGameContext = createContext<FlagGameContextType | undefined>(undefined
 export function FlagGameProvider({ children }: { children: ReactNode }) {
   const [gameConfig, setGameConfig] = useState<GameConfig>({
     difficulty: '',
-    maxAttempts: 3,
-    lifes: 3,
-    timeLimit: 60 // seconds
+    timeLimit: 60
   });
 
   return (

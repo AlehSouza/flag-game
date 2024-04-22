@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useFlagGame } from '../../contexts/FlagGameContext';
 import { useRouter } from 'next/router';
-import { Box, Button, Flex, Text, layout, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, Flex, Text, useDisclosure } from '@chakra-ui/react';
 import Head from "next/head";
 import { api } from '@/services';
 import shuffle from '@/helpers/shuffle';
-import Image from 'next/image';
 import { FlagA, FlagB, Modal } from '@/components';
+import { FaHeart, FaHeartBroken } from "react-icons/fa";
+
 
 const Index = () => {
 
@@ -14,6 +15,8 @@ const Index = () => {
     const [countries, setCountries] = useState<any>([])
     const [selectedCountry, setSelectedCountry] = useState<any>()
     const [puzzleCountries, setPuzzleCountries] = useState<any>([])
+    const [fails, setFails] = useState(0)
+    const [lifes, setLifes] = useState([true, true, true])
     const [layoutAB, setLayoutAB] = useState(false)
     const [points, setPoints] = useState(0)
     const { gameConfig, setGameConfig } = useFlagGame();
@@ -77,14 +80,27 @@ const Index = () => {
             selectNewCountry()
             setPoints((points + 1))
             return
+        } else {
+            const draft = lifes
+            draft[fails] = false
+            setLifes(draft)
+            setFails((fails + 1))
         }
+
+        if (fails === 2) {
+            onOpen()
+            return
+        }
+
+        selectNewCountry()
         updateBestScore(points)
-        onOpen()
     }
 
     const tryAgain = () => {
         onClose()
         selectNewCountry()
+        setFails(0)
+        setLifes([true, true, true])
         setPoints(0)
     }
 
@@ -98,7 +114,7 @@ const Index = () => {
         });
 
         return (
-            <Modal onClose={onClose} isOpen={isOpen} size='xl'>
+            <Modal onClose={() => { }} isOpen={isOpen} size='xl'>
                 <Flex
                     alignItems={'center'}
                     flexDir={'column'}
@@ -152,14 +168,34 @@ const Index = () => {
             justifyContent={'center'}
             alignItems={"center"}
         >
-            <ModalLose />
             <Head>
                 <title>Flag Game</title>
             </Head>
+            <ModalLose />
+            <Flex
+                width={'100%'}
+                padding={'20px'}
+                justifyContent={'flex-end'}
+                flexDir={'row-reverse'}
+            >
+                {
+                    lifes.map((heart: any, key: number) => {
+                        return (
+                            <Flex key={key} p={2}>
+                                {
+                                    heart
+                                        ? <FaHeart fontSize={'24px'} color="#ff3333" />
+                                        : <FaHeartBroken fontSize={'24px'} color="grey" />
+                                }
+                            </Flex>
+                        )
+                    })
+                }
+            </Flex>
             <Flex
                 borderRadius={'lg'}
-                color={'black'}
                 padding={'14px'}
+                color={'black'}
                 top={'20px'}
                 width={'100%'}
                 maxWidth={'200px'}
