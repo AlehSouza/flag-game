@@ -36,9 +36,10 @@ const Index = ({ selectedCountry, puzzleCountries, guessFlag }: IProps) => {
                     sm: '100%',
                 }}
                 minH={{
-                    base: '200px',
+                    base: '230px',
                     lg: '220px',
                     md: '330px',
+                    sm: '290px'
                 }}
                 justifyContent={'center'}
                 alignItems={'center'}
@@ -51,11 +52,10 @@ const Index = ({ selectedCountry, puzzleCountries, guessFlag }: IProps) => {
                 width={{
                     base: 'auto',
                     lg: '800px',
-                    md: '800px',
+                    md: '700px',
                 }}
                 flexDirection={'row'}
                 flexWrap={'wrap'}
-
                 justifyContent={'center'}
                 alignItems={'center'}
                 gap={'20px'}

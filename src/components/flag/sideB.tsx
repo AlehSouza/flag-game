@@ -50,7 +50,7 @@ const Index = ({ selectedCountry, puzzleCountries, guessFlag }: IProps) => {
             <Flex
                 width={{
                     base: 'auto',
-                    lg: '1200px',
+                    lg: '600px',
                     md: '600px',
                 }}
                 flexDirection={{

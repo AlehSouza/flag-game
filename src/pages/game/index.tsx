@@ -165,7 +165,6 @@ const Index = () => {
             paddingBottom={'50px'}
             flexDir={"column"}
             background={'radial-gradient(ellipse at top, #662222, transparent),radial-gradient(ellipse at bottom, #150303, transparent);'}
-            justifyContent={'center'}
             alignItems={"center"}
         >
             <Head>
