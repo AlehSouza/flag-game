@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Box, Button, Flex, Text, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, Flex, Text, useDisclosure, useToast } from '@chakra-ui/react';
 import { FaHeart, FaHeartBroken, FaUndoAlt } from "react-icons/fa";
 import { useFlagGame } from '../../contexts/FlagGameContext';
 import { FlagA, FlagB, Modal } from '@/components';
@@ -35,8 +35,9 @@ const Index = () => {
         setLifes(draftLifes)
     }
 
-    // Helper Router
+    // Helpers
     const router = useRouter()
+    const toast = useToast()
 
     // Configurações do Modal de Derrota e Restart e Exit
     const {
@@ -141,6 +142,15 @@ const Index = () => {
             onOpen()
             return
         }
+        if (myFails != 0) {
+            toast({
+                duration: 3500,
+                position: window.innerWidth > 1200 ? 'bottom-right' : 'top',
+                render: () => (
+                    <ToastContainer />
+                ),
+            })
+        }
         selectNewCountry()
     }, [myFails])
 
@@ -155,6 +165,73 @@ const Index = () => {
         setPoints(0)
         setMyFails(0)
         onClose()
+    }
+
+    // Toast de erro
+    const ToastContainer = () => {
+        const correctPosFlagIndex = puzzleCountries.findIndex((country: any) => {
+            return country?.name?.common === selectedCountry?.name?.common;
+        });
+        return (
+            <Flex
+                background={'radial-gradient(ellipse at top, #662222, transparent),radial-gradient(ellipse at bottom, #150303, transparent);'}
+                borderRadius={'lg'}
+                boxShadow={'xl'}
+                justifyContent={'center'}
+                alignContent={'center'}
+                maxWidth={'300px'}
+                m={4}
+            >
+                {
+                    layoutAB
+                        ?
+                        <Flex
+                            justifyContent={'center'}
+                            alignItems={'center'}
+                            flexDir={'column'}
+                            textAlign={'center'}
+                            p={4}
+                        >
+
+                            <Box
+                                width={'240px'}
+                                height={'130px'}
+                                backgroundImage={`${selectedCountry?.flags?.svg}`}
+                                backgroundSize={'100% 100%'}
+                                backgroundPosition={'center'}
+                                my={4}
+                            />
+                            <Box>
+                                <span>A resposta correta era a opção: <Text as="b" color={'yellowgreen'}>{selectedCountry?.translations?.por?.common}</Text></span>
+                            </Box>
+                        </Flex>
+                        :
+                        <Flex
+                            justifyContent={'center'}
+                            alignItems={'center'}
+                            flexDir={'column'}
+                            textAlign={'center'}
+                            p={4}
+                        >
+                            <Box>
+                                <span>
+                                    A bandeira correta para <br />
+                                    <Text as="b" color={'yellowgreen'}>{selectedCountry?.translations?.por?.common}</Text> <br />
+                                    era a opção de nº <span style={{ color: 'yellowgreen' }}>{correctPosFlagIndex + 1}</span>
+                                </span>
+                            </Box>
+                            <Box
+                                width={'240px'}
+                                height={'130px'}
+                                backgroundImage={`${selectedCountry?.flags?.svg}`}
+                                backgroundSize={'100% 100%'}
+                                backgroundPosition={'center'}
+                                my={4}
+                            />
+                        </Flex>
+                }
+            </Flex >
+        )
     }
 
     // Modal de encerramento do jogo
