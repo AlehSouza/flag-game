@@ -34,10 +34,8 @@ function Index({
             >
                 <ModalOverlay />
                 <ModalContent background={'#323232'} margin={5}>
-                    {/* <ModalHeader style={{ letterSpacing: '1px' }}>{title && title}</ModalHeader> */}
-                    {/* <ModalCloseButton /> */}
                     <ModalBody
-                        paddingTop={'24px'}
+                        py={'24px'}
                         background={'radial-gradient(ellipse at top, #662222, transparent),radial-gradient(ellipse at bottom, #150303, transparent);'}
                     >
                     {children}

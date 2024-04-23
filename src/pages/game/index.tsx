@@ -169,10 +169,10 @@ const Index = () => {
                     alignItems={'center'}
                     flexDir={'column'}
                 >
-                    <Text fontSize={'32px'} fontWeight={'bold'} pb={8}>
+                    <Text fontSize={'32px'} fontWeight={'bold'} pb={4}>
                         Fim de jogo!
                     </Text>
-                    <Text pb={8} textAlign={'center'}>
+                    <Text pb={4} textAlign={'center'}>
                         {
                             layoutAB
                                 ? <span>A resposta correta era a <Text as="b" color={'yellowgreen'}>{selectedCountry?.translations?.por?.common}</Text></span>
@@ -195,7 +195,7 @@ const Index = () => {
                         Sua pontuação foi de <span style={{ color: 'yellowgreen' }}>{points}</span> pontos!
                     </Text>
                     <Button width={'100%'} mb={'16px'} onClick={() => { tryAgain() }}>Tentar novamente </Button>
-                    <Button width={'100%'} mb={'16px'} onClick={() => { router.push('/') }}>Voltar ao menu </Button>
+                    <Button width={'100%'} onClick={() => { router.push('/') }}>Voltar ao menu </Button>
                 </Flex>
             </Modal>
         )
@@ -216,11 +216,11 @@ const Index = () => {
                         Você já marcou <span style={{ fontWeight: 'bold', color: 'yellowgreen' }}>{points}</span> pontos e tem  <span style={{ fontWeight: 'bold', color: '#ff3333' }}>{maxFails - myFails}</span> vidas restantes
                     </Text>
                     <Flex width={'100%'} gap={6}>
-                        <Button width={'100%'} mb={'16px'} onClick={() => {
+                        <Button width={'100%'} onClick={() => {
                             tryAgain()
                             onCloseRestart()
                         }}>Reiniciar </Button>
-                        <Button width={'100%'} mb={'16px'} onClick={() => { onCloseRestart() }}>Voltar </Button>
+                        <Button width={'100%'} onClick={() => { onCloseRestart() }}>Voltar </Button>
                     </Flex>
                 </Flex>
             </Modal>
@@ -235,17 +235,17 @@ const Index = () => {
                     alignItems={'center'}
                     flexDir={'column'}
                 >
-                    <Text fontSize={'32px'} fontWeight={'bold'} pb={8} textAlign={'center'}>
+                    <Text fontSize={'32px'} fontWeight={'bold'} textAlign={'center'}>
                         Deseja sair para o menu princípal?
                     </Text>
-                    <Text pb={8} textAlign={'center'}>
-                        Você já marcou <span style={{ fontWeight: 'bold', color: 'yellowgreen' }}>{points}</span> pontos e tem  <span style={{ fontWeight: 'bold', color: '#ff3333' }}>{maxFails - myFails}</span> vidas restantes
+                    <Text py={8} textAlign={'center'}>
+                        Você marcou <span style={{ fontWeight: 'bold', color: 'yellowgreen' }}>{points}</span> pontos e tem  <span style={{ fontWeight: 'bold', color: '#ff3333' }}>{maxFails - myFails}</span> vidas restantes
                     </Text>
                     <Flex width={'100%'} gap={6}>
-                        <Button width={'100%'} mb={'16px'} onClick={() => {
+                        <Button width={'100%'} onClick={() => {
                             router.push('/')
                         }}>Confirmar </Button>
-                        <Button width={'100%'} mb={'16px'} onClick={() => { onCloseExit() }}>Cancelar </Button>
+                        <Button width={'100%'} onClick={() => { onCloseExit() }}>Cancelar </Button>
                     </Flex>
                 </Flex>
             </Modal>
