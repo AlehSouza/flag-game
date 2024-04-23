@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Box, Button, Flex, Text, useDisclosure } from '@chakra-ui/react';
+import { FaHeart, FaHeartBroken, FaUndoAlt } from "react-icons/fa";
 import { useFlagGame } from '../../contexts/FlagGameContext';
-import { FaHeart, FaHeartBroken } from "react-icons/fa";
 import { FlagA, FlagB, Modal } from '@/components';
 import { useRouter } from 'next/router';
 import { api } from '@/services';
@@ -12,7 +12,7 @@ const Index = () => {
     // #TODO arrumar todos os ANY'S
 
     // Configurações do game
-    const { gameConfig, setGameConfig } = useFlagGame();
+    const { gameConfig } = useFlagGame();
 
     // Configurações do layout
     const [layoutAB, setLayoutAB] = useState(false)
@@ -38,17 +38,38 @@ const Index = () => {
     // Helper Router
     const router = useRouter()
 
-    // Configurações do Modal de Derrota
+    // Configurações do Modal de Derrota e Restart e Exit
     const {
         isOpen,
         onOpen,
         onClose
     } = useDisclosure()
 
+    const {
+        isOpen: isOpenExit,
+        onOpen: onOpenExit,
+        onClose: onCloseExit,
+    } = useDisclosure()
+
+    const {
+        isOpen: isOpenRestart,
+        onOpen: onOpenRestart,
+        onClose: onCloseRestart,
+    } = useDisclosure()
+
     // Verificação inicial
     useEffect(() => {
         gameConfig.difficulty === '' ? router.push('/') : null
         getCountries()
+        const handleKeyPress = (event: any) => {
+            if (event.key === 'Escape') {
+                onOpenExit()
+            }
+        };
+        document.addEventListener('keydown', handleKeyPress);
+        return () => {
+            document.removeEventListener('keydown', handleKeyPress);
+        };
     }, [])
 
     // Ação inicial ao receber dados da Api
@@ -111,21 +132,7 @@ const Index = () => {
         }
         lifeUpdate()
         setMyFails((myFails + 1))
-        selectNewCountry()
         updateBestScore(points)
-    }
-
-    // Ação de reiniciar o jogo
-    const tryAgain = () => {
-        const newLifes = lifes.map((life: any) => {
-            const newItem = !life
-            return newItem
-        })
-        setLifes(newLifes)
-        selectNewCountry()
-        setPoints(0)
-        setMyFails(0)
-        onClose()
     }
 
     // Verificação pra quando o usuário atingir maximo de erros, encerrar o jogo
@@ -134,7 +141,21 @@ const Index = () => {
             onOpen()
             return
         }
+        selectNewCountry()
     }, [myFails])
+
+    // Ação de reiniciar o jogo
+    const tryAgain = () => {
+        const newLifes = lifes.map((life: any) => {
+            const newItem = true
+            return newItem
+        })
+        setLifes(newLifes)
+        selectNewCountry()
+        setPoints(0)
+        setMyFails(0)
+        onClose()
+    }
 
     // Modal de encerramento do jogo
     const ModalLose = () => {
@@ -180,7 +201,58 @@ const Index = () => {
         )
     }
 
-    // DOM do Jogo
+    // Modal Reiniciar o Jogo
+    const ModalRestart = () => {
+        return (
+            <Modal onClose={() => { }} isOpen={isOpenRestart} size='xl'>
+                <Flex
+                    alignItems={'center'}
+                    flexDir={'column'}
+                >
+                    <Text fontSize={'32px'} fontWeight={'bold'} pb={8} textAlign={'center'}>
+                        Tem certeza que você deseja reiniciar?
+                    </Text>
+                    <Text pb={8} textAlign={'center'}>
+                        Você já marcou <span style={{ fontWeight: 'bold', color: 'yellowgreen' }}>{points}</span> pontos e tem  <span style={{ fontWeight: 'bold', color: '#ff3333' }}>{maxFails - myFails}</span> vidas restantes
+                    </Text>
+                    <Flex width={'100%'} gap={6}>
+                        <Button width={'100%'} mb={'16px'} onClick={() => {
+                            tryAgain()
+                            onCloseRestart()
+                        }}>Reiniciar </Button>
+                        <Button width={'100%'} mb={'16px'} onClick={() => { onCloseRestart() }}>Voltar </Button>
+                    </Flex>
+                </Flex>
+            </Modal>
+        )
+    }
+
+    // Modal Sair para o Menu inicial
+    const ModalExit = () => {
+        return (
+            <Modal onClose={() => { }} isOpen={isOpenExit} size='xl'>
+                <Flex
+                    alignItems={'center'}
+                    flexDir={'column'}
+                >
+                    <Text fontSize={'32px'} fontWeight={'bold'} pb={8} textAlign={'center'}>
+                        Deseja sair para o menu princípal?
+                    </Text>
+                    <Text pb={8} textAlign={'center'}>
+                        Você já marcou <span style={{ fontWeight: 'bold', color: 'yellowgreen' }}>{points}</span> pontos e tem  <span style={{ fontWeight: 'bold', color: '#ff3333' }}>{maxFails - myFails}</span> vidas restantes
+                    </Text>
+                    <Flex width={'100%'} gap={6}>
+                        <Button width={'100%'} mb={'16px'} onClick={() => {
+                            router.push('/')
+                        }}>Confirmar </Button>
+                        <Button width={'100%'} mb={'16px'} onClick={() => { onCloseExit() }}>Cancelar </Button>
+                    </Flex>
+                </Flex>
+            </Modal>
+        )
+    }
+
+    // DOM
     return (
         <Flex
             w={"100%"}
@@ -200,26 +272,44 @@ const Index = () => {
             <Head>
                 <title>Flags</title>
             </Head>
+            <ModalExit />
             <ModalLose />
+            <ModalRestart />
             <Flex
                 width={'100%'}
                 padding={'20px'}
-                justifyContent={'flex-end'}
+                justifyContent={'space-between'}
                 flexDir={'row-reverse'}
             >
-                {
-                    lifes.map((heart: any, key: number) => {
-                        return (
-                            <Flex key={key} p={2}>
-                                {
-                                    heart
-                                        ? <FaHeart fontSize={'24px'} color="#ff3333" />
-                                        : <FaHeartBroken fontSize={'24px'} color="grey" />
-                                }
-                            </Flex>
-                        )
-                    })
-                }
+                <Flex
+                    overflow={'hidden'}
+                    justifyContent={'center'}
+                    alignItems={'center'}
+                    width={'50px'}
+                    height={'50px'}
+                    style={{
+                        borderRadius: '100px'
+                    }}
+                >
+                    <Button height={'100%'} onClick={() => { onOpenRestart() }}>
+                        <FaUndoAlt fontSize={'40px'} color="white" />
+                    </Button>
+                </Flex>
+                <Flex flexDir={'row-reverse'}>
+                    {
+                        lifes.map((heart: any, key: number) => {
+                            return (
+                                <Flex key={key} p={2}>
+                                    {
+                                        heart
+                                            ? <FaHeart fontSize={'24px'} color="#ff3333" />
+                                            : <FaHeartBroken fontSize={'24px'} color="grey" />
+                                    }
+                                </Flex>
+                            )
+                        })
+                    }
+                </Flex>
             </Flex>
             <Flex
                 borderRadius={'lg'}
