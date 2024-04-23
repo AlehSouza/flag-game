@@ -3,6 +3,8 @@ import React, { createContext, useState, useContext, ReactNode } from 'react';
 interface GameConfig {
   difficulty: string;
   timeLimit: number;
+  maxLifes: any,
+  maxFails: any,
 }
 
 interface FlagGameContextType {
@@ -15,7 +17,9 @@ const FlagGameContext = createContext<FlagGameContextType | undefined>(undefined
 export function FlagGameProvider({ children }: { children: ReactNode }) {
   const [gameConfig, setGameConfig] = useState<GameConfig>({
     difficulty: '',
-    timeLimit: 60
+    timeLimit: 60,
+    maxLifes: [],
+    maxFails: 0,
   });
 
   return (

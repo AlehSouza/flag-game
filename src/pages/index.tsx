@@ -24,10 +24,12 @@ const Index = () => {
         onClose: onCloseFaq,
     } = useDisclosure()
 
-    const setGamesDificulty = (diff: string) => {
+    const setGamesDificulty = (diff: string, maxFails: any, lifes: any) => {
         const draft = {
             ...gameConfig,
-            difficulty: diff
+            difficulty: diff,
+            maxFails: maxFails,
+            maxLifes: lifes,
         }
         setGameConfig(draft)
         router.push('/game')
@@ -85,7 +87,6 @@ const Index = () => {
         )
     }
 
-
     return (
         <Flex
             w={"100%"}
@@ -96,7 +97,7 @@ const Index = () => {
             flexDir={"column"}
         >
             <Head>
-                <title>Flag Game</title>
+                <title>Flags</title>
             </Head>
             <ModalRank />
             <ModalFaq />
@@ -124,7 +125,8 @@ const Index = () => {
             </Flex>
             {
                 !isPlay
-                    ? <Flex direction="column" justifyContent={'center'} alignItems={'center'} gap={4} width={"90%"} maxW={"600px"}>
+                    ?
+                    <Flex direction="column" justifyContent={'center'} alignItems={'center'} gap={4} width={"90%"} maxW={"600px"}>
                         <Button width={'100%'} p={'20px'} variant="solid" onClick={() => { setIsPlay(!isPlay) }}>
                             Jogar
                         </Button>
@@ -140,14 +142,42 @@ const Index = () => {
                             </a>
                         </Flex>
                     </Flex>
-                    : <Flex direction="column" gap={4} width={"90%"} maxW={"600px"}>
-                        <Button colorScheme="green" variant="solid" onClick={() => { setGamesDificulty('easy') }}>
+                    :
+                    <Flex direction="column" gap={4} width={"90%"} maxW={"600px"}>
+                        <Button
+                            colorScheme="green"
+                            variant="solid"
+                            onClick={() => {
+                                setGamesDificulty(
+                                    'Fácil',
+                                    5,
+                                    [true, true, true, true, true]
+                                )
+                            }}>
                             <label style={{ width: "100%", cursor: "pointer" }}>Fácil</label>
                         </Button>
-                        <Button colorScheme="yellow" variant="solid" onClick={() => { setGamesDificulty('medium') }}>
+                        <Button
+                            colorScheme="yellow"
+                            variant="solid"
+                            onClick={() => {
+                                setGamesDificulty(
+                                    'Médio',
+                                    3,
+                                    [true, true, true]
+                                )
+                            }}>
                             <label style={{ width: "100%", cursor: "pointer" }}>Médio</label>
                         </Button>
-                        <Button colorScheme="red" variant="solid" onClick={() => { setGamesDificulty('hard') }}>
+                        <Button
+                            colorScheme="red"
+                            variant="solid"
+                            onClick={() => {
+                                setGamesDificulty(
+                                    'Difícil',
+                                    1,
+                                    [true]
+                                )
+                            }}>
                             <label style={{ width: "100%", cursor: "pointer" }}>Difícil</label>
                         </Button>
                         <Button variant="ghost" onClick={() => { setIsPlay(!isPlay) }}>
