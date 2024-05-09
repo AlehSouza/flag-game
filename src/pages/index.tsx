@@ -335,9 +335,9 @@ const Index = () => {
                         <Button width={"100%"} p={"20px"} variant="solid" onClick={() => { onOpenHtp() }}>
                             <label style={{ width: "100%", cursor: "pointer" }}>Como jogar</label>
                         </Button>
-                        <Button width={"100%"} p={"20px"} variant="solid" onClick={() => { onOpen() }}>
+                        {/* <Button width={"100%"} p={"20px"} variant="solid" onClick={() => { onOpen() }}>
                             <label style={{ width: "100%", cursor: "pointer" }}>LeaderBoard</label>
-                        </Button>
+                        </Button> */}
                         <Flex width={"100%"} bgColor={"#000000"} p={"8px 24px"} borderRadius={"lg"} _hover={{ backgroundColor: "#1a1a1a" }}>
                             <a href="https://github.com/AlehSouza" target="_blank" rel="noopener noreferrer" style={{ width: "100%", textAlign: "center", fontWeight: "bold" }}>
                                 Meu Github

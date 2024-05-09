@@ -94,6 +94,13 @@ const Index = () => {
             const { data } = await api.get<{}[]>('/all')
             setCountries(shuffle(data))
         } catch (e) {
+            toast({
+                title: 'Erro de conexão',
+                description: "Parece que a sua conexão esta instável, tente novamente",
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+            })
             console.error(e)
         }
     }
