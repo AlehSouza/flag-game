@@ -340,13 +340,12 @@ const Index = () => {
     return (
         <Flex
             w={"100%"}
-            h={{
+            minH={{
                 base: 'auto',
                 lg: '100vh',
                 md: 'auto',
                 sm: 'auto'
             }}
-            minH={{ base: '100vh' }}
             padding={'25px'}
             paddingBottom={'50px'}
             flexDir={"column"}
