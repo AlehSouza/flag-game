@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
+import { FlagA, FlagB, Modal } from '@/components';
+import shuffle from '@/helpers/shuffle';
+import { api } from '@/services';
 import { Box, Button, Flex, Text, useDisclosure, useToast } from '@chakra-ui/react';
+import Head from "next/head";
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { FaHeart, FaHeartBroken, FaUndoAlt } from "react-icons/fa";
 import { useFlagGame } from '../../contexts/FlagGameContext';
-import { FlagA, FlagB, Modal } from '@/components';
-import { useRouter } from 'next/router';
-import { api } from '@/services';
-import shuffle from '@/helpers/shuffle';
-import Head from "next/head";
 
 const Index = () => {
     // #TODO arrumar todos os ANY'S
@@ -91,7 +91,7 @@ const Index = () => {
     const getCountries = async () => {
         // Tipar no finals
         try {
-            const { data } = await api.get<{}[]>('/all')
+            const { data } = await api.get<{}[]>('')
             setCountries(shuffle(data))
         } catch (e) {
             toast({
@@ -209,7 +209,7 @@ const Index = () => {
                                 my={4}
                             />
                             <Box>
-                                <span>A resposta correta era a opção: <Text as="b" color={'yellowgreen'}>{selectedCountry?.translations?.por?.common}</Text></span>
+                                <span>A resposta correta era a opção: <Text as="b" color={'yellowgreen'}>{selectedCountry?.name.common}</Text></span>
                             </Box>
                         </Flex>
                         :
@@ -223,7 +223,7 @@ const Index = () => {
                             <Box>
                                 <span>
                                     A bandeira correta para <br />
-                                    <Text as="b" color={'yellowgreen'}>{selectedCountry?.translations?.por?.common}</Text> <br />
+                                    <Text as="b" color={'yellowgreen'}>{selectedCountry?.name.common}</Text> <br />
                                     era a opção de nº <span style={{ color: 'yellowgreen' }}>{correctPosFlagIndex + 1}</span>
                                 </span>
                             </Box>
@@ -259,8 +259,8 @@ const Index = () => {
                     <Text pb={4} textAlign={'center'}>
                         {
                             layoutAB
-                                ? <span>A resposta correta era a <Text as="b" color={'yellowgreen'}>{selectedCountry?.translations?.por?.common}</Text></span>
-                                : <span>A bandeira correta para <Text as="b" color={'yellowgreen'}>{selectedCountry?.translations?.por?.common}</Text>, era a opção de nº <span style={{ color: 'yellowgreen' }}>{correctPosFlagIndex + 1}</span></span>
+                                ? <span>A resposta correta era a <Text as="b" color={'yellowgreen'}>{selectedCountry?.name.common}</Text></span>
+                                : <span>A bandeira correta para <Text as="b" color={'yellowgreen'}>{selectedCountry?.name.common}</Text>, era a opção de nº <span style={{ color: 'yellowgreen' }}>{correctPosFlagIndex + 1}</span></span>
                         }
 
                     </Text>

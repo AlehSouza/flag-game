@@ -44,7 +44,7 @@ const Index = ({ selectedCountry, puzzleCountries, guessFlag }: IProps) => {
                     color={'greenyellow'}
                     textAlign={'center'}
                 >
-                    {selectedCountry?.translations?.por?.common}
+                    {selectedCountry?.name.common}
                 </Text>
             </Flex>
             <Flex
