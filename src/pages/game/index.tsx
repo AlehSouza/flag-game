@@ -209,7 +209,7 @@ const Index = () => {
                                 my={4}
                             />
                             <Box>
-                                <span>A resposta correta era a opção: <Text as="b" color={'yellowgreen'}>{selectedCountry?.name.common}</Text></span>
+                                <span>A resposta correta era a opção: <Text as="b" color={'yellowgreen'}>{selectedCountry?.name.nativeName.por.common}</Text></span>
                             </Box>
                         </Flex>
                         :
@@ -223,7 +223,7 @@ const Index = () => {
                             <Box>
                                 <span>
                                     A bandeira correta para <br />
-                                    <Text as="b" color={'yellowgreen'}>{selectedCountry?.name.common}</Text> <br />
+                                    <Text as="b" color={'yellowgreen'}>{selectedCountry?.name.nativeName.por.common}</Text> <br />
                                     era a opção de nº <span style={{ color: 'yellowgreen' }}>{correctPosFlagIndex + 1}</span>
                                 </span>
                             </Box>
@@ -259,8 +259,8 @@ const Index = () => {
                     <Text pb={4} textAlign={'center'}>
                         {
                             layoutAB
-                                ? <span>A resposta correta era a <Text as="b" color={'yellowgreen'}>{selectedCountry?.name.common}</Text></span>
-                                : <span>A bandeira correta para <Text as="b" color={'yellowgreen'}>{selectedCountry?.name.common}</Text>, era a opção de nº <span style={{ color: 'yellowgreen' }}>{correctPosFlagIndex + 1}</span></span>
+                                ? <span>A resposta correta era a <Text as="b" color={'yellowgreen'}>{selectedCountry?.name.nativeName.por.common}</Text></span>
+                                : <span>A bandeira correta para <Text as="b" color={'yellowgreen'}>{selectedCountry?.name.nativeName.por.common}</Text>, era a opção de nº <span style={{ color: 'yellowgreen' }}>{correctPosFlagIndex + 1}</span></span>
                         }
 
                     </Text>
