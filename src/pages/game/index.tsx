@@ -4,7 +4,7 @@ import { Box, Button, Flex, Text, useDisclosure, useToast } from '@chakra-ui/rea
 import Head from "next/head";
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { FaHeart, FaHeartBroken, FaUndoAlt } from "react-icons/fa";
+import { FaHeart, FaHeartBroken, FaUndoAlt, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 import { useFlagGame } from '../../contexts/FlagGameContext';
 import allCountries from './../../services/api/api';
 
@@ -27,6 +27,9 @@ const Index = () => {
     const [points, setPoints] = useState(0)
     const [myFails, setMyFails] = useState(0)
     const [maxFails, setMaxFails] = useState(gameConfig.maxFails)
+
+    // Controle de som
+    const [isSoundEnabled, setIsSoundEnabled] = useState(true)
 
     // Ação de atualizar as vidas
     const lifeUpdate = () => {
@@ -134,10 +137,23 @@ const Index = () => {
     // Ação de tentativa de adivinhar a bandeira
     const guessFlag = (name: string) => {
         if (name === selectedCountry?.translations.por.common) {
+            // Toca som de acerto
+            if (isSoundEnabled) {
+                const pointSound = new Audio('./audio/point.mp3')
+                pointSound.play().catch(err => console.error('Erro ao tocar som de acerto:', err))
+            }
+            
             selectNewCountry()
             setPoints((points + 1))
             return
         }
+        
+        // Toca som de erro
+        if (isSoundEnabled) {
+            const errorSound = new Audio('./audio/erro.mp3')
+            errorSound.play().catch(err => console.error('Erro ao tocar som de erro:', err))
+        }
+        
         lifeUpdate()
         setMyFails((myFails + 1))
         updateBestScore(points)
@@ -358,25 +374,45 @@ const Index = () => {
             <ModalExit />
             <ModalLose />
             <ModalRestart />
+
             <Flex
                 width={'100%'}
                 padding={'20px'}
                 justifyContent={'space-between'}
                 flexDir={'row-reverse'}
             >
-                <Flex
-                    overflow={'hidden'}
-                    justifyContent={'center'}
-                    alignItems={'center'}
-                    width={'50px'}
-                    height={'50px'}
-                    style={{
-                        borderRadius: '100px'
-                    }}
-                >
-                    <Button height={'100%'} onClick={() => { onOpenRestart() }}>
-                        <FaUndoAlt fontSize={'40px'} color="white" />
-                    </Button>
+                <Flex gap={4}>
+                    <Flex
+                        overflow={'hidden'}
+                        justifyContent={'center'}
+                        alignItems={'center'}
+                        width={'50px'}
+                        height={'50px'}
+                        style={{
+                            borderRadius: '100px'
+                        }}
+                    >
+                        <Button height={'100%'} onClick={() => { setIsSoundEnabled(!isSoundEnabled) }}>
+                            {isSoundEnabled 
+                                ? <FaVolumeUp fontSize={'40px'} color="white" />
+                                : <FaVolumeMute fontSize={'40px'} color="white" />
+                            }
+                        </Button>
+                    </Flex>
+                    <Flex
+                        overflow={'hidden'}
+                        justifyContent={'center'}
+                        alignItems={'center'}
+                        width={'50px'}
+                        height={'50px'}
+                        style={{
+                            borderRadius: '100px'
+                        }}
+                    >
+                        <Button height={'100%'} onClick={() => { onOpenRestart() }}>
+                            <FaUndoAlt fontSize={'40px'} color="white" />
+                        </Button>
+                    </Flex>
                 </Flex>
                 <Flex flexDir={'row-reverse'}>
                     {
