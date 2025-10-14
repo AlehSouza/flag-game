@@ -140,6 +140,7 @@ const Index = () => {
             // Toca som de acerto
             if (isSoundEnabled) {
                 const pointSound = new Audio('./audio/point.mp3')
+                pointSound.volume = 0.3
                 pointSound.play().catch(err => console.error('Erro ao tocar som de acerto:', err))
             }
             
@@ -151,6 +152,7 @@ const Index = () => {
         // Toca som de erro
         if (isSoundEnabled) {
             const errorSound = new Audio('./audio/erro.mp3')
+            errorSound.volume = 0.3
             errorSound.play().catch(err => console.error('Erro ao tocar som de erro:', err))
         }
         
