@@ -242,7 +242,7 @@ const Index = () => {
                                 <span>
                                     A bandeira correta para <br />
                                     <Text as="b" color={'yellowgreen'}>{selectedCountry?.translations.por.common}</Text> <br />
-                                    era a opção de nº <span style={{ color: 'yellowgreen' }}>{correctPosFlagIndex + 1}</span>
+                                    era a opção:
                                 </span>
                             </Box>
                             <Box
