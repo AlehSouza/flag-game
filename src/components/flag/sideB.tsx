@@ -44,7 +44,7 @@ const Index = ({ selectedCountry, puzzleCountries, guessFlag }: IProps) => {
                     color={'greenyellow'}
                     textAlign={'center'}
                 >
-                    {selectedCountry?.name.nativeName.por.common}
+                    {selectedCountry?.translations?.por?.common}
                 </Text>
             </Flex>
             <Flex
@@ -67,7 +67,7 @@ const Index = ({ selectedCountry, puzzleCountries, guessFlag }: IProps) => {
                     puzzleCountries.length > 0 &&
                     puzzleCountries.map((puzzleCountry: any, index: any) => {
                         return (
-                            <button key={index} onClick={() => { guessFlag(puzzleCountry.name.nativeName.por.common) }}>
+                            <button key={index} onClick={() => { guessFlag(puzzleCountry.translations.por.common) }}>
                                 <Flex
                                     minW={'280px'}
                                     minH={'150px'}

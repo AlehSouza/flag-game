@@ -70,8 +70,8 @@ const Index = ({ selectedCountry, puzzleCountries, guessFlag }: IProps) => {
                                 md: '100%',
                                 sm: '100%',
                             }}>
-                                <Button p={'40px'} w={'100%'} onClick={() => { guessFlag(puzzleCountry.name.nativeName.por.common) }}>
-                                    {puzzleCountry?.name.nativeName.por.common}
+                                <Button p={'40px'} w={'100%'} onClick={() => { guessFlag(puzzleCountry.translations.por.common) }}>
+                                    {puzzleCountry?.translations?.por?.common}
                                 </Button>
                             </Box>
                         )

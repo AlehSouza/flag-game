@@ -1,12 +1,12 @@
 import { FlagA, FlagB, Modal } from '@/components';
 import shuffle from '@/helpers/shuffle';
-import { api } from '@/services';
 import { Box, Button, Flex, Text, useDisclosure, useToast } from '@chakra-ui/react';
 import Head from "next/head";
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { FaHeart, FaHeartBroken, FaUndoAlt } from "react-icons/fa";
 import { useFlagGame } from '../../contexts/FlagGameContext';
+import allCountries from './../../services/api/api';
 
 const Index = () => {
     // #TODO arrumar todos os ANY'S
@@ -18,9 +18,9 @@ const Index = () => {
     const [layoutAB, setLayoutAB] = useState(false)
 
     // Todos os paises disponíveis, País selecionado, Países opções
-    const [countries, setCountries] = useState<any>([])
+    const [countries, setCountries] = useState<any[]>(allCountries)
     const [selectedCountry, setSelectedCountry] = useState<any>()
-    const [puzzleCountries, setPuzzleCountries] = useState<any>([])
+    const [puzzleCountries, setPuzzleCountries] = useState<any[]>([])
 
     // Acertos e erros
     const [lifes, setLifes] = useState(gameConfig.maxLifes)
@@ -91,8 +91,8 @@ const Index = () => {
     const getCountries = async () => {
         // Tipar no finals
         try {
-            const { data } = await api.get<{}[]>('')
-            setCountries(shuffle(data))
+            // const { data } = await api.get('')
+            setCountries(shuffle(allCountries))
         } catch (e) {
             toast({
                 title: 'Erro de conexão',
@@ -133,7 +133,7 @@ const Index = () => {
 
     // Ação de tentativa de adivinhar a bandeira
     const guessFlag = (name: string) => {
-        if (name === selectedCountry?.name?.common) {
+        if (name === selectedCountry?.translations.por.common) {
             selectNewCountry()
             setPoints((points + 1))
             return
@@ -209,7 +209,7 @@ const Index = () => {
                                 my={4}
                             />
                             <Box>
-                                <span>A resposta correta era a opção: <Text as="b" color={'yellowgreen'}>{selectedCountry?.name.nativeName.por.common}</Text></span>
+                                <span>A resposta correta era a opção: <Text as="b" color={'yellowgreen'}>{selectedCountry?.translations.por.common}</Text></span>
                             </Box>
                         </Flex>
                         :
@@ -223,7 +223,7 @@ const Index = () => {
                             <Box>
                                 <span>
                                     A bandeira correta para <br />
-                                    <Text as="b" color={'yellowgreen'}>{selectedCountry?.name.nativeName.por.common}</Text> <br />
+                                    <Text as="b" color={'yellowgreen'}>{selectedCountry?.translations.por.common}</Text> <br />
                                     era a opção de nº <span style={{ color: 'yellowgreen' }}>{correctPosFlagIndex + 1}</span>
                                 </span>
                             </Box>
@@ -259,8 +259,8 @@ const Index = () => {
                     <Text pb={4} textAlign={'center'}>
                         {
                             layoutAB
-                                ? <span>A resposta correta era a <Text as="b" color={'yellowgreen'}>{selectedCountry?.name.nativeName.por.common}</Text></span>
-                                : <span>A bandeira correta para <Text as="b" color={'yellowgreen'}>{selectedCountry?.name.nativeName.por.common}</Text>, era a opção de nº <span style={{ color: 'yellowgreen' }}>{correctPosFlagIndex + 1}</span></span>
+                                ? <span>A resposta correta era a <Text as="b" color={'yellowgreen'}>{selectedCountry?.translations.por.common}</Text></span>
+                                : <span>A bandeira correta para <Text as="b" color={'yellowgreen'}>{selectedCountry?.translations.por.common}</Text>, era a opção de nº <span style={{ color: 'yellowgreen' }}>{correctPosFlagIndex + 1}</span></span>
                         }
 
                     </Text>
