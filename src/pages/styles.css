@@ -1,19 +1,29 @@
+/* Desabilitar scroll para TV */
+html, body {
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+}
+
 /* width */
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 0px;
+    display: none;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: #1F0707;
+    background: transparent;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #662222;
+    background: transparent;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #662222;
+    background: transparent;
 }

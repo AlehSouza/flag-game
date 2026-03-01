@@ -12,15 +12,13 @@ const Index = ({ selectedCountry, puzzleCountries, guessFlag }: IProps) => {
             justifyContent={'center'}
             alignItems={'center'}
             flexDir={'column'}
+            flex={1}
+            overflow={'hidden'}
+            maxH={'calc(100vh - 120px)'}
         >
             <Text
-                pb={{
-                    base: 4,
-                    lg: 16
-                }}
-                fontSize={{
-                    base: '26px',
-                }}
+                pb={{ base: 2, lg: 3 }}
+                fontSize={{ base: '18px', lg: '22px', xl: '26px' }}
                 textAlign={'center'}
                 width={'auto'}
                 fontWeight={'bold'}
@@ -29,48 +27,40 @@ const Index = ({ selectedCountry, puzzleCountries, guessFlag }: IProps) => {
                 Que país é esse?
             </Text>
             <Flex
-                width={{
-                    base: '100%',
-                    lg: '350px',
-                    md: '100%',
-                    sm: '100%',
-                }}
-                minH={{
-                    base: '230px',
-                    lg: '220px',
-                    md: '330px',
-                    sm: '290px'
-                }}
+                width={{ base: '80%', sm: '70%', md: '50%', lg: '30%', xl: '25%' }}
+                height={{ base: '20vh', lg: '25vh', xl: '28vh' }}
+                maxW={'400px'}
                 justifyContent={'center'}
                 alignItems={'center'}
                 backgroundImage={`${selectedCountry?.flags?.svg}`}
-                backgroundSize={'100% 100%'}
+                backgroundSize={'contain'}
+                backgroundRepeat={'no-repeat'}
                 backgroundPosition={'center'}
-                mb={16}
+                mb={{ base: 3, lg: 4 }}
             />
             <Flex
-                width={{
-                    base: 'auto',
-                    lg: '800px',
-                    md: '700px',
-                }}
+                width={{ base: '95%', md: '90%', lg: '80%', xl: '70%' }}
+                maxW={'900px'}
                 flexDirection={'row'}
                 flexWrap={'wrap'}
                 justifyContent={'center'}
                 alignItems={'center'}
-                gap={'20px'}
+                gap={{ base: '8px', lg: '12px' }}
             >
                 {
                     puzzleCountries.length > 0 &&
                     puzzleCountries.map((puzzleCountry: any, index: any) => {
                         return (
-                            <Box key={index} width={{
-                                base: '100%',
-                                lg: '46%',
-                                md: '100%',
-                                sm: '100%',
-                            }}>
-                                <Button p={'40px'} w={'100%'} onClick={() => { guessFlag(puzzleCountry.translations.por.common) }}>
+                            <Box key={index} width={{ base: '48%', lg: '48%' }}>
+                                <Button
+                                    p={{ base: '20px', lg: '25px', xl: '30px' }}
+                                    fontSize={{ base: '12px', lg: '14px', xl: '16px' }}
+                                    w={'100%'}
+                                    h={{ base: '50px', lg: '60px', xl: '70px' }}
+                                    whiteSpace={'normal'}
+                                    wordBreak={'break-word'}
+                                    onClick={() => { guessFlag(puzzleCountry.translations.por.common) }}
+                                >
                                     {puzzleCountry?.translations?.por?.common}
                                 </Button>
                             </Box>

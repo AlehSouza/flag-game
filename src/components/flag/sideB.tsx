@@ -12,15 +12,13 @@ const Index = ({ selectedCountry, puzzleCountries, guessFlag }: IProps) => {
             justifyContent={'center'}
             alignItems={'center'}
             flexDir={'column'}
+            flex={1}
+            overflow={'hidden'}
+            maxH={'calc(100vh - 120px)'}
         >
             <Text
-                pb={{
-                    base: 16,
-                    lg: 16
-                }}
-                fontSize={{
-                    base: '26px',
-                }}
+                pb={{ base: 2, lg: 3 }}
+                fontSize={{ base: '18px', lg: '22px', xl: '26px' }}
                 textAlign={'center'}
                 letterSpacing={'1.5px'}
                 fontWeight={'bold'}
@@ -34,12 +32,10 @@ const Index = ({ selectedCountry, puzzleCountries, guessFlag }: IProps) => {
                 backgroundSize={'100% 100%'}
                 backgroundPosition={'center'}
                 borderRadius={'lg'}
-                mb={10}
+                mb={{ base: 2, lg: 3 }}
             >
                 <Text
-                    fontSize={{
-                        base: '26px',
-                    }}
+                    fontSize={{ base: '20px', lg: '24px', xl: '28px' }}
                     fontWeight={'bold'}
                     color={'greenyellow'}
                     textAlign={'center'}
@@ -48,35 +44,42 @@ const Index = ({ selectedCountry, puzzleCountries, guessFlag }: IProps) => {
                 </Text>
             </Flex>
             <Flex
-                width={{
-                    base: 'auto',
-                    lg: '600px',
-                    md: '600px',
-                }}
-                flexDirection={{
-                    base: 'column',
-                    lg: 'row',
-                    md: 'row',
-                }}
+                width={{ base: '95%', md: '90%', lg: '85%', xl: '80%' }}
+                maxW={'1000px'}
+                flexDirection={'row'}
                 flexWrap={'wrap'}
                 justifyContent={'center'}
                 alignItems={'center'}
-                gap={'20px'}
+                gap={{ base: '8px', lg: '12px' }}
             >
                 {
                     puzzleCountries.length > 0 &&
                     puzzleCountries.map((puzzleCountry: any, index: any) => {
                         return (
-                            <button key={index} onClick={() => { guessFlag(puzzleCountry.translations.por.common) }}>
+                            <button
+                                key={index}
+                                onClick={() => { guessFlag(puzzleCountry.translations.por.common) }}
+                                style={{
+                                    cursor: 'pointer',
+                                    border: '2px solid transparent',
+                                    borderRadius: '8px',
+                                    transition: 'all 0.2s',
+                                    padding: 0
+                                }}
+                            >
                                 <Flex
-                                    minW={'280px'}
-                                    minH={'150px'}
+                                    w={{ base: '40vw', sm: '35vw', md: '30vw', lg: '20vw', xl: '18vw' }}
+                                    h={{ base: '15vh', sm: '18vh', md: '20vh', lg: '22vh', xl: '25vh' }}
+                                    maxW={'250px'}
+                                    maxH={'160px'}
                                     justifyContent={'center'}
                                     alignItems={'center'}
                                     backgroundImage={`${puzzleCountry?.flags?.svg}`}
                                     backgroundPosition={'center'}
-                                    backgroundSize={'cover'}
+                                    backgroundSize={'contain'}
+                                    backgroundRepeat={'no-repeat'}
                                     borderRadius={'lg'}
+                                    _hover={{ transform: 'scale(1.05)' }}
                                 />
                             </button>
                         )

@@ -291,12 +291,15 @@ const Index = () => {
 
     return (
         <Flex
-            w={"100%"}
+            w={"100vw"}
             h={"100vh"}
+            maxH={"100vh"}
+            overflow={"hidden"}
             background={"radial-gradient(ellipse at top, #662222, transparent),radial-gradient(ellipse at bottom, #150303, transparent);"}
             justifyContent={"center"}
             alignItems={"center"}
             flexDir={"column"}
+            padding={{ base: '20px', lg: '30px' }}
         >
             <Head>
                 <title>Flags</title>

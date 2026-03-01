@@ -357,15 +357,11 @@ const Index = () => {
     // DOM
     return (
         <Flex
-            w={"100%"}
-            minH={{
-                base: 'auto',
-                lg: '100vh',
-                md: 'auto',
-                sm: 'auto'
-            }}
-            padding={'25px'}
-            paddingBottom={'50px'}
+            w={"100vw"}
+            h={"100vh"}
+            maxH={"100vh"}
+            overflow={"hidden"}
+            padding={{ base: '10px', lg: '15px' }}
             flexDir={"column"}
             background={'radial-gradient(ellipse at top, #662222, transparent),radial-gradient(ellipse at bottom, #150303, transparent);'}
             alignItems={"center"}
@@ -379,25 +375,33 @@ const Index = () => {
 
             <Flex
                 width={'100%'}
-                padding={'20px'}
+                padding={{ base: '5px 10px', lg: '10px 15px' }}
                 justifyContent={'space-between'}
+                alignItems={'center'}
                 flexDir={'row-reverse'}
+                flexShrink={0}
             >
-                <Flex gap={4}>
+                <Flex gap={{ base: 2, lg: 3 }} alignItems={'center'}>
+                    <Text
+                        fontWeight={'bold'}
+                        fontSize={{ base: '14px', lg: '16px', xl: '18px' }}
+                        color={'white'}
+                        mr={{ base: 2, lg: 4 }}
+                    >
+                        Acertos: <span style={{ color: '#4ade80' }}>{points}</span>
+                    </Text>
                     <Flex
                         overflow={'hidden'}
                         justifyContent={'center'}
                         alignItems={'center'}
-                        width={'50px'}
-                        height={'50px'}
-                        style={{
-                            borderRadius: '100px'
-                        }}
+                        width={{ base: '35px', lg: '45px' }}
+                        height={{ base: '35px', lg: '45px' }}
+                        borderRadius={'100px'}
                     >
-                        <Button height={'100%'} onClick={() => { setIsSoundEnabled(!isSoundEnabled) }}>
+                        <Button height={'100%'} minW={'auto'} p={2} onClick={() => { setIsSoundEnabled(!isSoundEnabled) }}>
                             {isSoundEnabled 
-                                ? <FaVolumeUp fontSize={'40px'} color="white" />
-                                : <FaVolumeMute fontSize={'40px'} color="white" />
+                                ? <FaVolumeUp fontSize={'20px'} color="white" />
+                                : <FaVolumeMute fontSize={'20px'} color="white" />
                             }
                         </Button>
                     </Flex>
@@ -405,53 +409,30 @@ const Index = () => {
                         overflow={'hidden'}
                         justifyContent={'center'}
                         alignItems={'center'}
-                        width={'50px'}
-                        height={'50px'}
-                        style={{
-                            borderRadius: '100px'
-                        }}
+                        width={{ base: '35px', lg: '45px' }}
+                        height={{ base: '35px', lg: '45px' }}
+                        borderRadius={'100px'}
                     >
-                        <Button height={'100%'} onClick={() => { onOpenRestart() }}>
-                            <FaUndoAlt fontSize={'40px'} color="white" />
+                        <Button height={'100%'} minW={'auto'} p={2} onClick={() => { onOpenRestart() }}>
+                            <FaUndoAlt fontSize={'20px'} color="white" />
                         </Button>
                     </Flex>
                 </Flex>
-                <Flex flexDir={'row-reverse'}>
+                <Flex flexDir={'row-reverse'} alignItems={'center'}>
                     {
                         lifes.map((heart: any, key: number) => {
                             return (
-                                <Flex key={key} p={2}>
+                                <Flex key={key} p={{ base: 1, lg: 2 }}>
                                     {
                                         heart
-                                            ? <FaHeart fontSize={'24px'} color="#ff3333" />
-                                            : <FaHeartBroken fontSize={'24px'} color="grey" />
+                                            ? <FaHeart fontSize={'18px'} color="#ff3333" />
+                                            : <FaHeartBroken fontSize={'18px'} color="grey" />
                                     }
                                 </Flex>
                             )
                         })
                     }
                 </Flex>
-            </Flex>
-            <Flex
-                borderRadius={'lg'}
-                padding={'14px'}
-                color={'black'}
-                top={'20px'}
-                width={'100%'}
-                maxWidth={'200px'}
-            >
-                <Text
-                    textAlign={'center'}
-                    fontWeight={'bold'}
-                    width={'100%'}
-                    fontSize={'1.25rem'}
-                    justifyContent={'center'}
-                    alignItems={'center'}
-                    display={'flex'}
-                    color={'white'}
-                >
-                    Acertos <span style={{ color: 'green', paddingLeft: '10px' }}>{points}</span>
-                </Text>
             </Flex>
             {
                 layoutAB

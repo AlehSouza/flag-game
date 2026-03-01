@@ -31,12 +31,18 @@ function Index({
                 isOpen={isOpen}
                 size={size}
                 isCentered
+                scrollBehavior="inside"
             >
                 <ModalOverlay />
-                <ModalContent background={'#323232'} margin={5}>
+                <ModalContent 
+                    background={'#323232'} 
+                    margin={5}
+                    maxH={'90vh'}
+                >
                     <ModalBody
                         py={'24px'}
                         background={'radial-gradient(ellipse at top, #662222, transparent),radial-gradient(ellipse at bottom, #150303, transparent);'}
+                        overflowY={'auto'}
                     >
                     {children}
                 </ModalBody>
