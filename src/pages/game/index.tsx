@@ -170,7 +170,7 @@ const Index = () => {
         if (myFails != 0) {
             toast({
                 duration: 3500,
-                position: window.innerWidth > 1200 ? 'bottom-right' : 'top',
+                position: 'bottom-left',
                 render: () => (
                     <ToastContainer />
                 ),
@@ -204,8 +204,8 @@ const Index = () => {
                 boxShadow={'xl'}
                 justifyContent={'center'}
                 alignContent={'center'}
-                maxWidth={'300px'}
-                m={4}
+                maxWidth={'280px'}
+                m={2}
             >
                 {
                     layoutAB
@@ -215,19 +215,20 @@ const Index = () => {
                             alignItems={'center'}
                             flexDir={'column'}
                             textAlign={'center'}
-                            p={4}
+                            p={3}
                         >
 
                             <Box
-                                width={'240px'}
-                                height={'130px'}
+                                width={'160px'}
+                                height={'90px'}
                                 backgroundImage={`${selectedCountry?.flags?.svg}`}
-                                backgroundSize={'100% 100%'}
+                                backgroundSize={'contain'}
+                                backgroundRepeat={'no-repeat'}
                                 backgroundPosition={'center'}
-                                my={4}
+                                my={2}
                             />
-                            <Box>
-                                <span>A resposta correta era a opção: <Text as="b" color={'yellowgreen'}>{selectedCountry?.translations.por.common}</Text></span>
+                            <Box fontSize={'14px'}>
+                                <span>A resposta correta era: <Text as="b" color={'yellowgreen'}>{selectedCountry?.translations.por.common}</Text></span>
                             </Box>
                         </Flex>
                         :
@@ -236,22 +237,23 @@ const Index = () => {
                             alignItems={'center'}
                             flexDir={'column'}
                             textAlign={'center'}
-                            p={4}
+                            p={3}
                         >
-                            <Box>
+                            <Box fontSize={'14px'}>
                                 <span>
                                     A bandeira correta para <br />
                                     <Text as="b" color={'yellowgreen'}>{selectedCountry?.translations.por.common}</Text> <br />
-                                    era a opção:
+                                    era:
                                 </span>
                             </Box>
                             <Box
-                                width={'240px'}
-                                height={'130px'}
+                                width={'160px'}
+                                height={'90px'}
                                 backgroundImage={`${selectedCountry?.flags?.svg}`}
-                                backgroundSize={'100% 100%'}
+                                backgroundSize={'contain'}
+                                backgroundRepeat={'no-repeat'}
                                 backgroundPosition={'center'}
-                                my={4}
+                                my={2}
                             />
                         </Flex>
                 }
